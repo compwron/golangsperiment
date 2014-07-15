@@ -1,23 +1,20 @@
 package main
 
 import (
-	"fmt"
-	"time"
+        "fmt"
+        "net/http"
+
+        "github.com/zenazn/goji"
+        "github.com/zenazn/goji/web"
 )
+var c  = make(chan int )
 
-var c = make(chan int, 5)
-
-func main() {
-	go worker(1)
-	for i := 0; i < 10; i++ {
-		c <- i
-		fmt.Println(i)
-	}
+func hello(c web.C, w http.ResponseWriter, r *http.Request) {
+	c <- 42
+        fmt.Fprintf(w, 200)
 }
 
-func worker(id int) {
-	for {
-		_ = <-c
-		time.Sleep(time.Second)
-	}
+func main() {
+        goji.Post("/hello/:name", hello)
+        goji.Serve()
 }
