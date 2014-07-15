@@ -9,6 +9,7 @@ import (
 type Configuration struct {
 	Users  []string
 	Groups []string
+	Port   int
 }
 
 func main() {
@@ -19,5 +20,6 @@ func main() {
 	if err != nil {
 		fmt.Println("error:", err)
 	}
-	fmt.Println(configuration.Users) // output: [UserA, UserB]
+	fmt.Println(configuration.Users)
+	fmt.Println(configuration.Port, " port")
 }
