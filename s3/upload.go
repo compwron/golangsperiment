@@ -18,7 +18,7 @@ func UploadSampleFile(bucketName string, pathInBucket string, fileContents []byt
 	fmt.Println("\nData downloaded from S3 bucket:", string(uploadedContents))
 }
 
-func authorizeToAws() (aws.Auth){
+func authorizeToAws() aws.Auth {
 	auth, err := aws.EnvAuth()
 	if err != nil {
 		fmt.Println("error in aws login", err)
@@ -32,7 +32,7 @@ func getBucket(bucketName string) (bucket *s3.Bucket) {
 	return s.Bucket(bucketName)
 }
 
-func uploadToS3(bucket *s3.Bucket, pathInBucket string, fileContents []byte) () {
+func uploadToS3(bucket *s3.Bucket, pathInBucket string, fileContents []byte) {
 	err := bucket.Put(pathInBucket, fileContents, "content-type", s3.Private, s3.Options{})
 	if err != nil {
 		fmt.Println("\n", err, "\n")

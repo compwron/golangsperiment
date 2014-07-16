@@ -2,8 +2,8 @@ package main
 
 import (
 	"foo/json"
-	"foo/uuid"
 	"foo/s3"
+	"foo/uuid"
 )
 
 func main() {
