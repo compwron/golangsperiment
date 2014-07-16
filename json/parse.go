@@ -1,11 +1,11 @@
 package json
 
 import (
-	"encoding/json" // known json format
+	"encoding/json" 
 	"fmt"
-	// "github.com/bitly/go-simplejson" // arbitrary format json
+	"github.com/bitly/go-simplejson" // pretty import arbitrary format json
 	"os"
-	// "log"
+	"log"
 )
 
 type Configuration struct {
@@ -40,20 +40,32 @@ func ParseArbitraryJson() (map[string]interface {}, error) {
 	return parsedMap, err
 }
 
-// func ParseArbitraryJson() (*simplejson.Json, error) {
-// 	// from https://github.com/bitly/go-simplejson/blob/master/simplejson_test.go
-// 	file, _ := os.Open("json/example1.json")
-// 	arbitraryJson, err := simplejson.NewFromReader(file)
-// 	if err != nil {
-// 		log.Fatal(err)
-// 	}
+func ParseArbitraryJsonUsingLibrary() (*simplejson.Json, error) {
+	fmt.Println("\nUsing library to parse json without knowing what it will be:")
+	// from https://github.com/bitly/go-simplejson/blob/master/simplejson_test.go
+	arbitraryJson, err := simplejson.NewJson([]byte(`{
+		"test": {
+			"string_array": ["asdf", "ghjk", "zxcv"],
+			"string_array_null": ["abc", null, "efg"],
+			"array": [1, "2", 3],
+			"arraywithsubs": [{"subkeyone": 1},
+			{"subkeytwo": 2, "subkeythree": 3}],
+			"int": 10,
+			"float": 5.150,
+			"string": "simplejson",
+			"bool": true,
+			"sub_obj": {"a": 1}
+		}
+	}`))
+	
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Println(arbitraryJson)
+	return arbitraryJson, err
+}
 
-// 	for key, value := range arbitraryJson.Map() {
-// 		fmt.Println(key, value)
-// 	}
-
-// 	// fmt.Printf("%v\n", arbitraryJson)
-// 	fmt.Println(arbitraryJson)
-// 	return arbitraryJson, err
-
+// func WriteJsonToFile(err){
+	// json.NewEncoder(w io.Writer) *Encoder
+	// return nil
 // }

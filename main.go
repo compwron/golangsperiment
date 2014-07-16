@@ -10,6 +10,8 @@ func main() {
 	
 	json.ParseKnownFormatJsonFromFile()
 	json.ParseArbitraryJson()
+	json.ParseArbitraryJsonUsingLibrary()
+	// json.WriteJsonToFile()
 
 
 	// goji.Post("/hello/:name", hello)

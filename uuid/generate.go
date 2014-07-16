@@ -7,5 +7,5 @@ import (
 
 func GenerateUuid() {
 	uuid := uuid.NewRandom()
-	fmt.Println(uuid)
+	fmt.Println("Generated uuid:", uuid)
 }
