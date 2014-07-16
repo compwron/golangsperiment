@@ -6,7 +6,6 @@ import (
 	"github.com/crowdmob/goamz/aws"
 	"github.com/crowdmob/goamz/s3"
 	"log"
-	"foo/uuid"
 )
 
 func UploadSampleFile() {
@@ -28,21 +27,30 @@ func uploadToS3() (string, error) {
 	s := s3.New(auth, aws.USWest)
 	fmt.Println("new s3 response", s)
 
-	bucketName := fmt.Sprintf("someNewBucket%s", uuid.GenerateUuid())
+	bucketName := "someNewBuckete88c2f9e-b081-4f72-8559-13b9e8001d48" // existing bucket created via fmt.Sprintf("someNewBucket%s", uuid.GenerateUuid())
 	fmt.Println("Bucket name: ", bucketName)
 	
 	bucket := s.Bucket(bucketName)
 	fmt.Println(bucket, "")
 
 	// someData := []byte(`{"foo":"bar","baz":6,"stuff":["a","b"], "isTrue":false}`)
-	err = bucket.PutBucket(s3.Private)
 
 	// name string, data []byte, datatype string, permission s3.ACL) (string, error) {
-	// err = bucket.Put("somenewname", someData, "txt", s3.PublicRead, s3.Options{})
+	pathInBucket := "name"
+	err = bucket.Put("name", []byte("new content"), "content-type", s3.Private, s3.Options{})
+
 	if err != nil {
 		fmt.Println("\n", err, "\n")
 		return "", errors.New("Couldn't Upload That!")
 	}
-	return "it worked", nil
-	// return "foo", nil
+
+	data, err := bucket.Get(pathInBucket)
+	fmt.Println("data from bucket ... bucket name:", pathInBucket, "... bucket contents:", string(data))
+
+	if err != nil {
+		fmt.Println("\n", err, "\n")
+		return "", errors.New("Couldn't Get That!")
+	}
+
+	return "something meaningful", err
 }
