@@ -10,6 +10,9 @@ import (
 func UploadSampleFile(bucketName string, pathInBucket string, fileContents []byte) {
 	bucket := localBucketWithName(bucketName)
 
+	fmt.Println("\nAbout to create bucket in S3")
+	createNewAwsBucketWithName(bucketName)
+
 	fmt.Println("\nAbout to upload to S3")
 	uploadToS3(bucket, pathInBucket, fileContents)
 
@@ -32,7 +35,7 @@ func localBucketWithName(bucketName string) (bucket *s3.Bucket) {
 	return s.Bucket(bucketName)
 }
 
-func createBucketWithName(bucketName string) error {
+func createNewAwsBucketWithName(bucketName string) error {
 	bucket := localBucketWithName(bucketName)
 	return bucket.PutBucket(s3.Private)
 }
