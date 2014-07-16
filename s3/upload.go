@@ -5,52 +5,45 @@ import (
 	"fmt"
 	"github.com/crowdmob/goamz/aws"
 	"github.com/crowdmob/goamz/s3"
-	"log"
 )
 
-func UploadSampleFile() {
-	s3Response, err := uploadToS3()
-	if err != nil {
-		log.Fatal(err)
-	}
-	fmt.Println("\nResponse to s3 upload: ", s3Response)
+func UploadSampleFile(bucketName string, pathInBucket string, fileContents []byte) {
+	bucket := getBucket(bucketName)
+
+	fmt.Println("\nAbout to upload to S3")
+	uploadToS3(bucket, pathInBucket, fileContents)
+
+	fmt.Println("\nAbout to download from S3")
+	uploadedContents, _ := getFromS3(bucket, pathInBucket)
+	fmt.Println("\nData downloaded from S3 bucket:", string(uploadedContents))
 }
 
-func uploadToS3() (string, error) {
+func authorizeToAws() (aws.Auth){
 	auth, err := aws.EnvAuth()
-	fmt.Println("auth response", auth)
 	if err != nil {
-		fmt.Println(err)
-		return "", errors.New("Couldn't auth to Amazon AWS")
+		fmt.Println("error in aws login", err)
 	}
+	return auth
+}
 
+func getBucket(bucketName string) (bucket *s3.Bucket) {
+	auth := authorizeToAws()
 	s := s3.New(auth, aws.USWest)
-	fmt.Println("new s3 response", s)
+	return s.Bucket(bucketName)
+}
 
-	bucketName := "someNewBuckete88c2f9e-b081-4f72-8559-13b9e8001d48" // existing bucket created via fmt.Sprintf("someNewBucket%s", uuid.GenerateUuid())
-	fmt.Println("Bucket name: ", bucketName)
-	
-	bucket := s.Bucket(bucketName)
-	fmt.Println(bucket, "")
-
-	// someData := []byte(`{"foo":"bar","baz":6,"stuff":["a","b"], "isTrue":false}`)
-
-	// name string, data []byte, datatype string, permission s3.ACL) (string, error) {
-	pathInBucket := "name"
-	err = bucket.Put("name", []byte("new content"), "content-type", s3.Private, s3.Options{})
-
+func uploadToS3(bucket *s3.Bucket, pathInBucket string, fileContents []byte) () {
+	err := bucket.Put(pathInBucket, fileContents, "content-type", s3.Private, s3.Options{})
 	if err != nil {
 		fmt.Println("\n", err, "\n")
-		return "", errors.New("Couldn't Upload That!")
 	}
+}
 
+func getFromS3(bucket *s3.Bucket, pathInBucket string) ([]byte, error) {
 	data, err := bucket.Get(pathInBucket)
-	fmt.Println("data from bucket ... bucket name:", pathInBucket, "... bucket contents:", string(data))
-
 	if err != nil {
 		fmt.Println("\n", err, "\n")
-		return "", errors.New("Couldn't Get That!")
+		return nil, errors.New("Couldn't Get data")
 	}
-
-	return "something meaningful", err
+	return data, err
 }
