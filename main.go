@@ -11,6 +11,7 @@ func main() {
 	json.ParseKnownFormatJsonFromFile()
 	json.ParseArbitraryJson()
 	json.ParseArbitraryJsonUsingLibrary()
+	json.ParseArbitraryJsonFromFileUsingLibrary()
 	// json.WriteJsonToFile()
 
 

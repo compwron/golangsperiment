@@ -41,7 +41,7 @@ func ParseArbitraryJson() (map[string]interface {}, error) {
 }
 
 func ParseArbitraryJsonUsingLibrary() (*simplejson.Json, error) {
-	fmt.Println("\nUsing library to parse json without knowing what it will be:")
+	fmt.Println("\nUsing library to parse json without knowing what fields the json will have:")
 	// from https://github.com/bitly/go-simplejson/blob/master/simplejson_test.go
 	arbitraryJson, err := simplejson.NewJson([]byte(`{
 		"test": {
@@ -63,6 +63,14 @@ func ParseArbitraryJsonUsingLibrary() (*simplejson.Json, error) {
 	}
 	fmt.Println(arbitraryJson)
 	return arbitraryJson, err
+}
+
+func ParseArbitraryJsonFromFileUsingLibrary(){
+	file, _ := os.Open("json/example1.json")
+	arbitraryJson, _ := simplejson.NewFromReader(file)
+
+	fmt.Println("\nUsing library to parse json from file without knowing what fields the json will have:")
+	fmt.Println(arbitraryJson)
 }
 
 // func WriteJsonToFile(err){

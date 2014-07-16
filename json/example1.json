@@ -1,23 +1,14 @@
 {
-    "_comment" : "json stolen from http://json.org/example",
-    "glossary": {
-        "title": "example glossary",
-		"GlossDiv": {
-            "title": "S",
-			"GlossList": {
-                "GlossEntry": {
-                    "ID": "SGML",
-					"SortAs": "SGML",
-					"GlossTerm": "Standard Generalized Markup Language",
-					"Acronym": "SGML",
-					"Abbrev": "ISO 8879:1986",
-					"GlossDef": {
-                        "para": "A meta-markup language, used to create markup languages such as DocBook.",
-						"GlossSeeAlso": ["GML", "XML"]
-                    },
-					"GlossSee": "markup"
-                }
-            }
+        "test": {
+            "string_array": ["asdf", "ghjk", "zxcv"],
+            "string_array_null": ["abc", null, "efg"],
+            "array": [1, "2", 3],
+            "arraywithsubs": [{"subkeyone": 1},
+            {"subkeytwo": 2, "subkeythree": 3}],
+            "int": 10,
+            "float": 5.150,
+            "string": "simplejson",
+            "bool": true,
+            "sub_obj": {"a": 1}
         }
-    }
 }
