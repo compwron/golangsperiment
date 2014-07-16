@@ -1,20 +1,17 @@
 package main
 
 import (
-	"foo/uuid"
 	"foo/json"
+	"foo/uuid"
 )
 
 func main() {
 	uuid.GenerateUuid()
-	
+
 	json.ParseKnownFormatJsonFromFile()
 	json.ParseArbitraryJson()
 	json.ParseArbitraryJsonUsingLibrary()
 	json.ParseArbitraryJsonFromFileUsingLibrary()
-	// json.WriteJsonToFile()
 
-
-	// goji.Post("/hello/:name", hello)
-	// goji.Serve()
+	json.WriteJsonToFile()
 }

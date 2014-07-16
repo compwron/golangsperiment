@@ -1,11 +1,11 @@
 package json
 
 import (
-	"encoding/json" 
+	"encoding/json"
 	"fmt"
 	"github.com/bitly/go-simplejson" // pretty import arbitrary format json
-	"os"
 	"log"
+	"os"
 )
 
 type Configuration struct {
@@ -27,7 +27,7 @@ func ParseKnownFormatJsonFromFile() (*Configuration, error) {
 	return &configuration, nil
 }
 
-func ParseArbitraryJson() (map[string]interface {}, error) {
+func ParseArbitraryJson() (map[string]interface{}, error) {
 	someJson := []byte(`{"foo":"bar","baz":6,"stuff":["a","b"], "isTrue":false}`)
 	var jsonHolder interface{}
 	err := json.Unmarshal(someJson, &jsonHolder)
@@ -57,7 +57,7 @@ func ParseArbitraryJsonUsingLibrary() (*simplejson.Json, error) {
 			"sub_obj": {"a": 1}
 		}
 	}`))
-	
+
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -65,7 +65,7 @@ func ParseArbitraryJsonUsingLibrary() (*simplejson.Json, error) {
 	return arbitraryJson, err
 }
 
-func ParseArbitraryJsonFromFileUsingLibrary(){
+func ParseArbitraryJsonFromFileUsingLibrary() {
 	file, _ := os.Open("json/example1.json")
 	arbitraryJson, _ := simplejson.NewFromReader(file)
 
@@ -74,6 +74,6 @@ func ParseArbitraryJsonFromFileUsingLibrary(){
 }
 
 // func WriteJsonToFile(err){
-	// json.NewEncoder(w io.Writer) *Encoder
-	// return nil
+// json.NewEncoder(w io.Writer) *Encoder
+// return nil
 // }
