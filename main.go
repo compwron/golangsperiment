@@ -1,13 +1,16 @@
 package main
 
 import (
-	"foo/config"
 	"foo/uuid"
+	"foo/json"
 )
 
 func main() {
-	config.AppConfiguration()
 	uuid.GenerateUuid()
+	
+	json.ParseKnownFormatJsonFromFile()
+	json.ParseArbitraryJson()
+
 
 	// goji.Post("/hello/:name", hello)
 	// goji.Serve()
