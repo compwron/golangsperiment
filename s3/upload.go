@@ -8,7 +8,7 @@ import (
 )
 
 func UploadSampleFile(bucketName string, pathInBucket string, fileContents []byte) {
-	bucket := getBucket(bucketName)
+	bucket := localBucketWithName(bucketName)
 
 	fmt.Println("\nAbout to upload to S3")
 	uploadToS3(bucket, pathInBucket, fileContents)
@@ -26,10 +26,15 @@ func authorizeToAws() aws.Auth {
 	return auth
 }
 
-func getBucket(bucketName string) (bucket *s3.Bucket) {
+func localBucketWithName(bucketName string) (bucket *s3.Bucket) {
 	auth := authorizeToAws()
 	s := s3.New(auth, aws.USWest)
 	return s.Bucket(bucketName)
+}
+
+func createBucketWithName(bucketName string) error {
+	bucket := localBucketWithName(bucketName)
+	return bucket.PutBucket(s3.Private)
 }
 
 func uploadToS3(bucket *s3.Bucket, pathInBucket string, fileContents []byte) {
