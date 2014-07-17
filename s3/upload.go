@@ -22,7 +22,6 @@ func UploadSampleFile(bucketName string, pathInBucket string, fileContents []byt
 }
 
 func authorizeToAws() aws.Auth {
-	// set env variables 	AWS_SECRET_ACCESS_KEY and 	AWS_SECRET_KEY
 	auth, err := aws.EnvAuth()
 	if err != nil {
 		fmt.Println("error in aws login", err)
